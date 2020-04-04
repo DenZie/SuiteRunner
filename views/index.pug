@@ -1,0 +1,30 @@
+head
+	link(rel="stylesheet" href="https://jqwidgets.com/public/jqwidgets/styles/jqx.base.css" type="text/css")
+	script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+	script(src="https://jqwidgets.com/public/jqwidgets/jqxcore.js")
+	script(src="https://jqwidgets.com/public/jqwidgets/jqxbuttons.js")
+	script(src="https://jqwidgets.com/public/jqwidgets/jqxscrollbar.js")
+	script(src="https://jqwidgets.com/public/jqwidgets/jqxpanel.js")
+	script(src="https://jqwidgets.com/public/jqwidgets/jqxtree.js")
+	script(src="https://jqwidgets.com/public/jqwidgets/jqxcheckbox.js")
+	script(type="text/javascript").
+		$(document).ready(function () {
+		// create jqxTree
+		$('#jqxTree').jqxTree({  hasThreeStates: true, checkboxes: true});
+		$('#jqxTree').css('visibility', 'visible');
+		$('#jqxCheckBox').jqxCheckBox({ width: '200px', height: '25px', checked: true });
+		$('#jqxCheckBox').on('change', function (event) {
+		var checked = event.args.checked;
+		$('#jqxTree').jqxTree({ hasThreeStates: checked });
+		});
+		$("#jqxTree").jqxTree('selectItem', $("#home")[0]);
+		});
+body
+	div#jqxTree
+		ul
+			li(item-expanded='true')
+				a(href="#")= 'All Suites'
+					ul
+						each dt in data
+							li(item-checked='false')
+								a(href="#")= dt

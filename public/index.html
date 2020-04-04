@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://jqwidgets.com/public/jqwidgets/styles/jqx.base.css" type="text/css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://jqwidgets.com/public/jqwidgets/jqxcore.js"></script>
+<script src="https://jqwidgets.com/public/jqwidgets/jqxbuttons.js"></script>
+<script src="https://jqwidgets.com/public/jqwidgets/jqxscrollbar.js"></script>
+<script src="https://jqwidgets.com/public/jqwidgets/jqxpanel.js"></script>
+<script src="https://jqwidgets.com/public/jqwidgets/jqxtree.js"></script>
+<script src="https://jqwidgets.com/public/jqwidgets/jqxcheckbox.js"></script>
+<script type="text/javascript">
+        $(document).ready(function () {
+            // create jqxTree
+            $('#jqxTree').jqxTree({ height: '400px', hasThreeStates: true, checkboxes: true, width: '330px'});
+            $('#jqxTree').css('visibility', 'visible');
+            $('#jqxCheckBox').jqxCheckBox({ width: '200px', height: '25px', checked: true });
+            $('#jqxCheckBox').on('change', function (event) {
+                var checked = event.args.checked;
+                $('#jqxTree').jqxTree({ hasThreeStates: checked });
+            });
+            $("#jqxTree").jqxTree('selectItem', $("#home")[0]);
+        });
+    </script>
+</head>
+<body>
+
+<div id='jqxTree'>
+    <ul>
+        <li item-selected='true'>Home</li>
+        <li item-checked='true' item-expanded='true'><a href="#">Solutions</a>
+            <ul>
+                <li><a href="#">Government</a></li>
+                <li item-checked='false'><a href="#">Manufacturing</a></li>
+                <li><a href="#">Solutions</a>
+                    <ul>
+                        <li><a href="#">Consumer photo and video</a></li>
+                        <li><a href="#">Mobile</a></li>
+                        <li><a href="#">Rich Internet applications</a></li>
+                        <li><a href="#">Technical communication</a></li>
+                        <li><a href="#">Training and eLearning</a></li>
+                        <li><a href="#">Web conferencing</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">All industries and solutions</a></li>
+            </ul>
+        </li>                    
+    </ul>
+</div>
+</body>
+</html>
