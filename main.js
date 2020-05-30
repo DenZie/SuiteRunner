@@ -20,13 +20,6 @@ app.get("/process_get", function(req,res) {
 	
 	  var data = rf.getfiles();
 	  res.end(data );
-	  
-//	resp =  {
-//			FName:req.query.first_name,
-//			LName:req.query.last_name
-//	};
-//	console.log(resp);
-//	res.end( JSON.stringify(resp));
 });
 
 app.listen(port, () => console.log(`Example aphttp://marketplace.eclipse.org/marketplace-client-intro?mpc_install=1642532p listening on port ${port}!`))

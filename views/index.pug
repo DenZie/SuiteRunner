@@ -8,18 +8,35 @@ head
 	script(src="https://jqwidgets.com/public/jqwidgets/jqxtree.js")
 	script(src="https://jqwidgets.com/public/jqwidgets/jqxcheckbox.js")
 	script(type="text/javascript").
+		let sl= new Map();
 		$(document).ready(function () {
 		// create jqxTree
+
 		$('#jqxTree').jqxTree({  hasThreeStates: true, checkboxes: true});
 		$('#jqxTree').css('visibility', 'visible');
-		$('#jqxCheckBox').jqxCheckBox({ width: '200px', height: '25px', checked: true });
-		$('#jqxCheckBox').on('change', function (event) {
-		var checked = event.args.checked;
-		$('#jqxTree').jqxTree({ hasThreeStates: checked });
+		$('#jqxTree').on('checkChange', function (event) {
+		    var args = event.args;
+		    var element = args.element;
+		    var checked = args.checked;
+			if (element.parentElement.getAttribute("class") != 'jqx-tree-dropdown-root') {	
+				if(args.checked == true) {
+					sl.set(element.id, element.innerText);
+				} else {
+					sl.delete(element.id);
+				}
+				if(sl.size > 0 ) {
+					alert(sl.size);
+				}
+			}
+		}); 
+
 		});
-		$("#jqxTree").jqxTree('selectItem', $("#home")[0]);
-		});
+		runSuite= function() {
+		var roles = [...sl.values()];
+		alert("Suite \n " + roles);
+		}
 body
+	button#RunIt(onclick='runSuite()') Run Suite
 	div#jqxTree
 		ul
 			li(item-expanded='true')
