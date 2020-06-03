@@ -11,7 +11,6 @@ head
 		let sl= new Map();
 		$(document).ready(function () {
 		// create jqxTree
-
 		$('#jqxTree').jqxTree({  hasThreeStates: true, checkboxes: true});
 		$('#jqxTree').css('visibility', 'visible');
 		$('#jqxTree').on('checkChange', function (event) {
@@ -24,19 +23,15 @@ head
 				} else {
 					sl.delete(element.id);
 				}
-				if(sl.size > 0 ) {
-					alert(sl.size);
-				}
 			}
 		}); 
-
 		});
-		runSuite= function() {
-		var roles = [...sl.values()];
-		alert("Suite \n " + roles);
-		}
 body
-	button#RunIt(onclick='runSuite()') Run Suite
+	//button#RunIt(onclick='runSuite()') Run Suite
+	button#RunIt(type='submit', form='suiteform') Run Suite
+	form#suiteform(action="/run", method='POST')
+		input#name(type='text', value='densil', name='nm')
+	
 	div#jqxTree
 		ul
 			li(item-expanded='true')
