@@ -22,15 +22,18 @@ app.get('/suites', function (req, res) {
 	 res.render('index', { 'data': rf.getfiles()});
 });
 app.get("/status", function(req,res) {
-	var ran = Math.floor(Math.random() * Math.floor(10));
+	res.render('status');
+});
+app.get("/getstat", function(req,res) {
+	var ran = Math.floor(Math.random() * Math.floor(100));
 	var data = {"tot":10, "cur": ran};
-	console.log(data)
-//	res.send(data);
-	res.render('status', data);
+	res.send(data);
 });
 
 app.post("/run", function(req,res) {
 	var data = req.body;
+	console.log(data);
+	console.log("-----------------");
 	newman.run({
 		collection: require('./suites/Demo-1.postman_collection.json'),
 		reporters: 'cli'
@@ -38,17 +41,7 @@ app.post("/run", function(req,res) {
 		if (err) { throw err; }
 		console.log('collection run complete!');
 	});
-	  console.log( data);
-	  var k = "Processing";
-//	  res.end(k+ JSON.stringify(data));
-//	  res.end(JSON.stringify(data));
 	  res.render('status');
-	  
-//	  res.end(" Processing...");
-//	  console.log(data['']);
-//	  var resString = "Running " + data;
-//	  res.end(JSON.stringify(data));
-//	  console.log(data);
 });
 
 app.listen(port, () => console.log(`Suite runner started. listening on port ${port}!`))

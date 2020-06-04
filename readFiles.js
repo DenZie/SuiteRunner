@@ -8,7 +8,7 @@ var  dt= [];
 exports.getfiles = function () {
 	dt=[''];
 	var n='';
-	fs.readdirSync(__dirname).forEach(file => {	
+	fs.readdirSync(__dirname + "//suites").forEach(file => {	
 		if(file.endsWith("json")) {
 			dt.push(file);
 		}

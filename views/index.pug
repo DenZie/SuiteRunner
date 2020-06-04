@@ -26,17 +26,24 @@ head
 			}
 		}); 
 		});
+		function runSuite() {
+			$('#dataCnt').empty();
+			sl.forEach(function(value, id) {
+				var input = $("<input type=\"hidden\" id=\"" + id + "\" name=\"" + id + "\" value=\"" + value + "\" />");
+				$('#dataCnt').append(input);
+			})
+			$( "form" ).submit();
+		}
 body
 	//button#RunIt(onclick='runSuite()') Run Suite
-	button#RunIt(type='submit', form='suiteform') Run Suite
+	button#RunIt(type='button', form='suiteform' , onclick='runSuite()') Run Suite
 	form#suiteform(action="/run", method='POST')
-		input#name(type='text', value='densil', name='nm')
-	
-	div#jqxTree
-		ul
-			li(item-expanded='true')
-				a(href="#")= 'All Suites'
-					ul
-						each dt in data
-							li(item-checked='false')
-								a(href="#")= dt
+		div#dataCnt
+		div#jqxTree
+			ul
+				li(item-expanded='true')
+					a(href="#")= 'All Suites'
+						ul
+							each dt in data
+								li(item-checked='false')
+									a(href="#")= dt
