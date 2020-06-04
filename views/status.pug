@@ -4,15 +4,14 @@ head
 	script(src="https://code.jquery.com/jquery-1.12.4.js")
 	script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
 	script(type="text/javascript").
+		var tot= #{tot}
 		$(function() {
-			$( "#progressbar" ).progressbar({value: 10});
+			$( "#progressbar").progressbar({max: tot});
 		});
-		var i=0;
 		function showprogress() {
 		$.get( "/getstat", function( data ) {
-			$( "#progressbar" ).progressbar({value: data.cur});
-		if(i<10) {	
-			i=i+1;
+			$("#progressbar").progressbar( "option", "value", data.cur );
+		if(tot > data.cur) {	
 			setTimeout(showprogress, 3000)
 		}})};
 		showprogress();

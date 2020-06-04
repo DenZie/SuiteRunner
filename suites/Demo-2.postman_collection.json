@@ -1,17 +1,17 @@
 {
 	"info": {
 		"_postman_id": "946c70c4-db43-4920-a05d-31ff7c557636",
-		"name": "Demo-1",
+		"name": "Demo-2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "test",
+			"name": "Second Test",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://postman-echo.com/get?foo1=bar1&foo2=bar2",
+					"raw": "https://postman-echo.com/get?foo1=bar2&foo2=bar3",
 					"protocol": "https",
 					"host": [
 						"postman-echo",
@@ -23,11 +23,11 @@
 					"query": [
 						{
 							"key": "foo1",
-							"value": "bar1"
+							"value": "bar2"
 						},
 						{
 							"key": "foo2",
-							"value": "bar2"
+							"value": "bar3"
 						}
 					]
 				},
