@@ -32,17 +32,14 @@ app.get("/status", function(req,res) {
 });
 
 app.get("/getReslt", function(req,res) {
-	console.log("Result......");
 	var suite = "";
 	if (fs.existsSync(resultFile)) {
 		suite = fs.readFileSync(resultFile, 'utf8')
 	}	
-	console.log(suite);
 	res.send({'suite': suite});
 });
 
 app.get("/result", function(req,res) {
-	console.log("Result......");
 	res.render('result');
 });
 

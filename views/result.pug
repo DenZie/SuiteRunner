@@ -11,20 +11,21 @@ head
 				if(data.suite=="") {
 					setTimeout(showResult, 1000)
 				} else {
+				$("#suitetable").empty();
 				var suite = JSON.parse(data.suite);
+					var el ="<tr><th>Suite Name:</th><th>Execution Time:</th><th>Average Response Time:</th><th>Total Tests:</th><th>Failed Tests:</th><th>Total Assertions:</th><th>Failed Assertions:</th><th>Result:</th>/tr>";
 					suite.collectionResults.forEach(function(value, index, array) {
-					var el ="<tr><td>Suite Name:</td><td>" + value.suiteName + "</td></tr>";
-					el +="<tr><td>Execution Time:</td><td>" + value.executionTimeTotal + "</td></tr>";
-					el +="<tr><td>Average Response Time:</td><td>" + value.responseTimeAverage + "</td></tr>";
-					el +="<tr><td>Total Tests:</td><td>" + value.testsTotal + "</td></tr>";
-					el +="<tr><td>Failed Tests:</td><td>" + value.testsFailed + "</td></tr>";
-					el +="<tr><td>Total Assertions:</td><td>" + value.assertionsTotal + "</td></tr>";
-					el +="<tr><td>Failed Assertions:</td><td>" + value.assertionsFailed + "</td></tr>";
-					el +="<tr><td>Result:</td><td>" + value.result + "</td></tr><br\>";
+						el +="<tr><td>" + value.suiteName + "</td>";
+						el +="<td>" + value.executionTimeTotal + "</td>";
+						el +="<td>" + value.responseTimeAverage + "</td>";
+						el +="<td>" + value.testsTotal + "</td>";
+						el +="<td>" + value.testsFailed + "</td>";
+						el +="<td>" + value.assertionsTotal + "</td>";
+						el +="<td>" + value.assertionsFailed + "</td>";
+						el +="<td>" + value.result + "</td></tr>";
+					});
 					$("#suitetable").append(el);
 				}
-				);
-			}
 			});
 		}
 		$(document).ready(function(){
