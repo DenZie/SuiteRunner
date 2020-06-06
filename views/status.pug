@@ -1,16 +1,26 @@
 head
 	link(rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" type="text/css")
+	style(type='text/css').
+		.table, th, td {
+			border: 1px solid black;
+		}
 	link(rel="stylesheet" href="/resources/demos/style.css")
 	script(src="https://code.jquery.com/jquery-1.12.4.js")
 	script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
 	script(type="text/javascript").
-		var tot= #{tot}
+		var tot= #{tot};
 		$(function() {
 			$( "#progressbar").progressbar({max: tot});
 		});
 		function showprogress() {
 		$.get( "/getstat", function( data ) {
+			$("#stbody").empty();
 			$("#progressbar").progressbar( "option", "value", data.cur );
+			var suite = JSON.parse(data.suite)	
+			suite.collectionResults.forEach(function(value, index, array) {
+				var el ="<tr><td>Suite Name:</td><td>" + value.suiteName+ "</td></tr>";
+				$("#stbody").append(el);
+			});
 		if(tot > data.cur) {	
 			setTimeout(showprogress, 3000)
 		}})};
@@ -18,4 +28,8 @@ head
 body
 	p Running the suite
 	div#progressbar
+	div#summary
+		table#suitetable
+			tbody#stbody
+	
 	
