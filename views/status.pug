@@ -9,18 +9,18 @@ head
 	script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
 	script(type="text/javascript").
 		var tot= #{tot};
-		alert("tot" + tot);
 		$(function() {
 			$( "#progressbar").progressbar({max: tot});
 		});
 		function showprogress() {
 		$.get( "/getstat", function( data ) {
-			alert(data.cur);
 			$("#stbody").empty();
 			$("#progressbar").progressbar( "option", "value", data.cur );
 		if(tot > data.cur) {
 			setTimeout(showprogress, 1000)
-		} 
+		} else {
+			window.location.replace("/result");
+		}
 		})};
 		showprogress();
 body

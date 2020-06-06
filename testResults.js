@@ -1,52 +1,31 @@
 const fs = require('fs');
 const resultFile = 'result.json'
-	
-//    var limitConcurrency = settings['limitConcurrency']
-//    var testResultsBasePath = path.join(__dirname, '../', 'test-results')
-    var collectionCompleteCounter = 0
-    var totalCollections = 0
-    var tallyTestsTotal = 0
-    var tallyTestsFailed = 0
-    var tallyTestsPassed = 0
-    var tallyAssertionsTotal = 0
-    var tallyAssertionsFailed = 0
-    var tallyAssertionsPassed = 0
-//    var testStartTime = time.inSeconds()
-//    var testEndTime = 0
-//    var totalTestDuration = ''
-//    var testFinalResult = ''
-    var testResultSummary = {}
 
-
-    //Set initial testResultSummary properties
-//    testResultSummary['suiteId'] = settings['suiteId']
-//    testResultSummary['totalNumberOfCollections'] = mrPostmanObject['postmanCollections'].length
-//    testResultSummary['concurrencyLimit'] = limitConcurrency
-//    testResultSummary['timeoutCollection'] = settings.timeoutCollection
-//    testResultSummary['timeoutRequest'] = settings.timeoutRequest
-//    testResultSummary['timeoutScript'] = settings.timeoutScript
-    testResultSummary['collectionResults'] = []
+var collectionCompleteCounter = 0
+var totalCollections = 0
+var tallyTestsTotal = 0
+var tallyTestsFailed = 0
+var tallyTestsPassed = 0
+var tallyAssertionsTotal = 0
+var tallyAssertionsFailed = 0
+var tallyAssertionsPassed = 0
+var testResultSummary = {}
+testResultSummary['collectionResults'] = []
 
 exports.clearPreviousResult = function clearPreviousResult() {
 	testResultSummary['collectionResults'] = [];
 	collectionCompleteCounter=0;
+	if (fs.existsSync(resultFile)) {
+		fs.unlinkSync(resultFile);
+	}
+
 }
 
 exports.setCollectionCount = function setCollectionCount(count) {
 	totalCollections = count;
 }
 
-//exports.waitForFinishAndSave = function waitForFinish(callback) {
-//	console.log("Waiting for suite completion...");
-//	console.log(totalCollections)	;
-////	while(totalCollections != collectionCompleteCounter) {
-//////	console.log(collectionCompleteCounter)	;
-////	}
-//	callback();
-//}
-
 function saveResult() {
-	console.log("Saving results ...");
 	fs.writeFile(resultFile, JSON.stringify(testResultSummary), function (err) {
 	  if (err) throw err;
 	});
@@ -91,7 +70,6 @@ exports.processCollection = function resultOfNewmanRun(err, summary) {
 }
     
 var processSuite = function resultOfrunPostmanCollection(errMsg, collectionResults) {
-	console.log("Processing suite result.....");
     if (errMsg) {
         return callback(errMsg)
       } else {
@@ -108,8 +86,6 @@ var processSuite = function resultOfrunPostmanCollection(errMsg, collectionResul
         tallyAssertionsFailed += collectionResults.assertionsFailed
         tallyAssertionsPassed += collectionResults.assertionsPassed
         testResultSummary['collectionResults'].push(collectionResults)
-        console.log("totalCollections" + totalCollections);
-        console.log("collectionCompleteCounter" + collectionCompleteCounter);
         if(totalCollections == collectionCompleteCounter){
         	saveResult();
         }    

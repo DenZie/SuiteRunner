@@ -1,0 +1,38 @@
+head
+	script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js")
+	style(type='text/css').
+		.table, th, td {
+			border: 1px solid black;
+		}
+	
+	script(type="text/javascript").
+		function showResult() {
+			$.get( "/getReslt", function( data ) {
+				if(data.suite=="") {
+					setTimeout(showResult, 1000)
+				} else {
+				var suite = JSON.parse(data.suite);
+					suite.collectionResults.forEach(function(value, index, array) {
+					var el ="<tr><td>Suite Name:</td><td>" + value.suiteName + "</td></tr>";
+					el +="<tr><td>Execution Time:</td><td>" + value.executionTimeTotal + "</td></tr>";
+					el +="<tr><td>Average Response Time:</td><td>" + value.responseTimeAverage + "</td></tr>";
+					el +="<tr><td>Total Tests:</td><td>" + value.testsTotal + "</td></tr>";
+					el +="<tr><td>Failed Tests:</td><td>" + value.testsFailed + "</td></tr>";
+					el +="<tr><td>Total Assertions:</td><td>" + value.assertionsTotal + "</td></tr>";
+					el +="<tr><td>Failed Assertions:</td><td>" + value.assertionsFailed + "</td></tr>";
+					el +="<tr><td>Result:</td><td>" + value.result + "</td></tr><br\>";
+					$("#suitetable").append(el);
+				}
+				);
+			}
+			});
+		}
+		$(document).ready(function(){
+			showResult();
+		})
+body
+	p Suite results
+	div#summary
+		table#suitetable
+			
+	
