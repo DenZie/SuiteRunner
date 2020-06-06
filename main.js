@@ -23,13 +23,18 @@ app.use(bodyParser.json());
 
 const port = 3000
 app.set('view engine', 'pug');
-app.get('/', (req, res) => res.send('Hello World!'))
 app.get('/suites', function (req, res) {
 	 res.render('index', { 'data': rf.getfiles()});
 });
+
 app.get("/status", function(req,res) {
 	res.render('status');
 });
+
+app.get("/result", function(req,res) {
+	res.send('Report');
+});
+
 app.get("/getstat", function(req,res) {
 	console.log("Requested the status.......")
 	var tot='0';
@@ -45,10 +50,10 @@ app.get("/getstat", function(req,res) {
 	to_string = fileBuffer.toString();
 	split_lines = to_string.split("\n");
 	var data = {"tot": parseInt(tot), "cur": split_lines.length-1};
-	if (fs.existsSync(resultFile)) {
-		data["suite"] = fs.readFileSync(resultFile, 'utf8')
-	}
-//	console.log(data);
+//	if (fs.existsSync(resultFile)) {
+//		data["suite"] = fs.readFileSync(resultFile, 'utf8')
+//	}
+	console.log(data);
 	res.send(data);
 });
 
@@ -86,10 +91,9 @@ app.post("/run", function(req,res) {
 //		i=i+1;
 //		setTimeout(value, i* 2000);
 //	});
-	setTimeout(() => ts.waitForFinishAndSave(ts.saveResult), 0);
+//	setTimeout(() => ts.waitForFinishAndSave(ts.saveResult), 0);
 	console.log("Redirecting ....");
-//	res.render('status', {'tot': suiteLst.length});
-	res.send('done');
+	res.render('status', {'tot': suiteLst.length});
 	
 });
 

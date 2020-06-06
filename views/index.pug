@@ -35,7 +35,6 @@ head
 			$( "form" ).submit();
 		}
 body
-	//button#RunIt(onclick='runSuite()') Run Suite
 	button#RunIt(type='button', form='suiteform' , onclick='runSuite()') Run Suite
 	form#suiteform(action="/run", method='POST')
 		div#dataCnt

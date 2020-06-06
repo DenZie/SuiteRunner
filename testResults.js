@@ -27,24 +27,25 @@ const resultFile = 'result.json'
 //    testResultSummary['timeoutScript'] = settings.timeoutScript
     testResultSummary['collectionResults'] = []
 
-exports.clearPreviousResult = function resultOfNewmanRun() {
+exports.clearPreviousResult = function clearPreviousResult() {
 	testResultSummary['collectionResults'] = [];
+	collectionCompleteCounter=0;
 }
 
 exports.setCollectionCount = function setCollectionCount(count) {
 	totalCollections = count;
 }
 
-exports.waitForFinishAndSave = function waitForFinish(callback) {
-	console.log("Waiting for suite completion...");
-	console.log(totalCollections)	;
-	while(totalCollections != collectionCompleteCounter) {
-//	console.log(collectionCompleteCounter)	;
-	}
-	callback();
-}
+//exports.waitForFinishAndSave = function waitForFinish(callback) {
+//	console.log("Waiting for suite completion...");
+//	console.log(totalCollections)	;
+////	while(totalCollections != collectionCompleteCounter) {
+//////	console.log(collectionCompleteCounter)	;
+////	}
+//	callback();
+//}
 
-exports.saveResult = function saveResult() {
+function saveResult() {
 	console.log("Saving results ...");
 	fs.writeFile(resultFile, JSON.stringify(testResultSummary), function (err) {
 	  if (err) throw err;
@@ -52,7 +53,6 @@ exports.saveResult = function saveResult() {
 }
 
 exports.processCollection = function resultOfNewmanRun(err, summary) {
-	collectionCompleteCounter++;
     	var collectionResults = {}
       if (err) {
         errMsg = "Oops, newman run resulted in the following error: " + err.stack
@@ -85,20 +85,20 @@ exports.processCollection = function resultOfNewmanRun(err, summary) {
         } else {
         	collectionResults.result = 'passed'
         }
-//    	console.log(collectionResults);
-//        return processSuite(null, collectionResults)
+	  processSuite(null, collectionResults)
+  
       }
 }
     
 var processSuite = function resultOfrunPostmanCollection(errMsg, collectionResults) {
+	console.log("Processing suite result.....");
     if (errMsg) {
         return callback(errMsg)
       } else {
-        collectionCompleteCounter++
-
-        if (collectionResults.result === 'failed') {
-          collectionFailCounter++
-        }
+    	  collectionCompleteCounter++;
+		if (collectionResults.result === 'failed') {
+		  collectionFailCounter++
+		}
 
         //Tally data from collectionResults for testResultSummary
         tallyTestsTotal += collectionResults.testsTotal
@@ -108,6 +108,10 @@ var processSuite = function resultOfrunPostmanCollection(errMsg, collectionResul
         tallyAssertionsFailed += collectionResults.assertionsFailed
         tallyAssertionsPassed += collectionResults.assertionsPassed
         testResultSummary['collectionResults'].push(collectionResults)
-        console.log(testResultSummary);
+        console.log("totalCollections" + totalCollections);
+        console.log("collectionCompleteCounter" + collectionCompleteCounter);
+        if(totalCollections == collectionCompleteCounter){
+        	saveResult();
+        }    
       }
     }
