@@ -32,13 +32,30 @@ head
 				var input = $("<input type=\"hidden\" id=\"" + id + "\" name=\"" + id + "\" value=\"" + value + "\" />");
 				$('#dataCnt').append(input);
 			})
-			$( "form" ).submit();
+			$( "suiteform" ).submit();
+		}
+		
+		function delSuite() {
+			$('#suitDelList').empty();
+			sl.forEach(function(value, id) {
+				var input = $("<input type=\"hidden\" id=\"del-" + id + "\" name=\"" + id + "\" value=\"" + value + "\" />");
+				$('#suitDelList').append(input);
+			});
+			$( "#suiteDelform" ).submit();
+		}
+		
+		function addCollection() {
+			window.location.replace("/upload");
 		}
 body
+	button#DeleteIt(type='button', form='suiteDelform' , onclick='delSuite()') Delete Suite
 	button#RunIt(type='button', form='suiteform' , onclick='runSuite()') Run Suite
+	button#addsuite(type='button', onclick='addCollection()') Add Collection	
+	form#suiteDelform(action="/delete", method='POST')
+		#suitDelList
 	form#suiteform(action="/run", method='POST')
-		div#dataCnt
-		div#jqxTree
+		#dataCnt
+		#jqxTree
 			ul
 				li(item-expanded='true')
 					a(href="#")= 'All Suites'
