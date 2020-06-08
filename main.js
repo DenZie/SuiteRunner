@@ -90,8 +90,8 @@ app.post("/run", function(req,res) {
 			newman.run(suite, ts.processCollection).
 			on('start', function (err, args) {
 				fs.appendFile(statFile, "\n"+value , function (err) {
-					  if (err) throw err;
-					});
+				  if (err) throw err;
+				});
 			})
 		};
 		suiteLst.push(cmd);
