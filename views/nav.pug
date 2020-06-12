@@ -1,0 +1,38 @@
+doctype html
+head
+	script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+	style(type='text/css').
+		.navul {
+		  list-style-type: none;
+		  margin: 0;
+		  padding: 0;
+		  overflow: hidden;
+		  background-color: #000;
+		}
+		.navli {
+		  float: left;
+		}
+		.navlia {
+		  display: block;
+		  color: white;
+		  text-align: center;
+		  padding: 14px 16px;
+		  text-decoration: none;
+		}
+		li a:hover:not(.active) {
+		  background-color: #0A0;
+		}
+		
+	style(type='text/css').
+		.active {
+		  background-color: #AAAF50;
+		}
+	block script
+	
+body 
+ul.navul 
+	each key, val in {"Add Suite":"upload", "Run Suite":"--", "Delete Suite":"", "Show Result":"aa"}
+		li.navli
+			a.navlia(href=key)=val
+br
+block content

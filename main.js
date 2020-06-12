@@ -23,6 +23,11 @@ app.use(bodyParser.json());
 
 const port = 3000
 app.set('view engine', 'pug');
+
+app.get('/', function (req, res) {
+	 res.render('nav');
+});
+
 app.get('/suites', function (req, res) {
 	 res.render('index', { 'data': rf.getfiles()});
 });

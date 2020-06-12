@@ -1,6 +1,6 @@
-head
+extends nav
+block script
 	link(rel="stylesheet" href="https://jqwidgets.com/public/jqwidgets/styles/jqx.base.css" type="text/css")
-	script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
 	script(src="https://jqwidgets.com/public/jqwidgets/jqxcore.js")
 	script(src="https://jqwidgets.com/public/jqwidgets/jqxbuttons.js")
 	script(src="https://jqwidgets.com/public/jqwidgets/jqxscrollbar.js")
@@ -34,7 +34,8 @@ head
 			})
 			$( "form" ).submit();
 		}
-body
+		
+block content
 	button#RunIt(type='button', form='suiteform' , onclick='runSuite()') Run Suite
 	form#suiteform(action="/run", method='POST')
 		div#dataCnt

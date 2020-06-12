@@ -1,0 +1,36 @@
+html
+	head
+		style(type='text/css').
+			ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+			background-color: #0A0;
+			}
+			li {
+			float: left;
+			}
+			li a {
+			display: block;
+			color: white;
+			text-align: center;
+			padding: 14px 16px;
+			text-decoration: none;
+			}
+			li a:hover:not(.active) {
+			background-color: #000;
+			}
+			style(type='text/css').
+			.active {
+			background-color: #AAAF50;
+			}
+			
+		block scripts
+			script(src='/jquery.js')
+body
+	ul  
+		each item in ["Add Suite", "Run Suite", "Delete Suite", "Show Result"]
+			li
+				a(href="#"+item)=item
+	block content
