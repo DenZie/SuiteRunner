@@ -1,5 +1,5 @@
-head
-body
+extends nav
+block content
 	form#suiteform(action="/upload", method='POST' , enctype="multipart/form-data")
 		input(type="file", name="filetoupload")
 		input(type="submit")

@@ -29,8 +29,8 @@ app.get('/', function (req, res) {
 	 res.render('nav');
 });
 
-app.get('/suites', function (req, res) {
-	 res.render('index', { 'data': rf.getfiles()});
+app.get('/runSuite', function (req, res) {
+	 res.render('runSuite', { 'data': rf.getfiles()});
 });
 
 app.get("/status", function(req,res) {
@@ -64,7 +64,7 @@ app.post("/upload", function(req,res) {
 	    	console.log(newpath);
 	        fs.rename(oldpath, newpath, function (err) {
 	            if (err) throw err;
-	            	res.render('index', { 'data': rf.getfiles()});
+	            	res.render('runSuite', { 'data': rf.getfiles()});
 	          });
 	    });
 	} else {
@@ -105,7 +105,9 @@ app.post("/run", function(req,res) {
 	runner.runSuite(suiteLst)
 	res.render('status', {'tot': suiteLst.length});
 });
-
+app.get("/delete", function(req,res) {
+	res.render('deleteSuite', { 'status':"n",'data': rf.getfiles()});
+});
 app.post("/delete", function(req,res) {
 	var data = Object.values(req.body);
 	data.forEach(function display(value) {
@@ -113,7 +115,7 @@ app.post("/delete", function(req,res) {
 			fs.unlinkSync(__dirname + '/suites/' + value);
 		}
 	} );
-	res.render('index', { 'data': rf.getfiles()});
+	res.render('deleteSuite', { 'status':"y", 'data': rf.getfiles()});
 });
 
 app.listen(port, () => console.log(`Suite runner started. listening on port ${port}!`))

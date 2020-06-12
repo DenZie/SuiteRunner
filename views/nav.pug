@@ -27,11 +27,11 @@ head
 		.active {
 		  background-color: #AAAF50;
 		}
-	block script
+	block head
 	
 body 
 ul.navul 
-	each key, val in {"Add Suite":"upload", "Run Suite":"--", "Delete Suite":"", "Show Result":"aa"}
+	each key, val in {"Add Suite":"upload", "Run Suite":"runSuite", "Delete Suite":"delete", "Show Result":"result"}
 		li.navli
 			a.navlia(href=key)=val
 br

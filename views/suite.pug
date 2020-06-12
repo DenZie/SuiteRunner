@@ -1,5 +1,5 @@
 extends nav
-block script
+block append head
 	link(rel="stylesheet" href="https://jqwidgets.com/public/jqwidgets/styles/jqx.base.css" type="text/css")
 	script(src="https://jqwidgets.com/public/jqwidgets/jqxcore.js")
 	script(src="https://jqwidgets.com/public/jqwidgets/jqxbuttons.js")
@@ -11,7 +11,7 @@ block script
 		let sl= new Map();
 		$(document).ready(function () {
 		// create jqxTree
-			$('#jqxTree').jqxTree({  hasThreeStates: true, checkboxes: true});
+			$('#jqxTree').jqxTree({  width: '400px', hasThreeStates: true, checkboxes: true});
 			$('#jqxTree').css('visibility', 'visible');
 			$('#jqxTree').on('checkChange', function (event) {
 			    var args = event.args;
@@ -26,31 +26,7 @@ block script
 				}
 			}); 
 		});
-		function runSuite() {
-			$('#dataCnt').empty();
-			sl.forEach(function(value, id) {
-				var input = $("<input type=\"hidden\" id=\"" + id + "\" name=\"" + id + "\" value=\"" + value + "\" />");
-				$('#dataCnt').append(input);
-			});
-			$( "form" ).submit();
-		}
-		function delSuite() {
-			$('#suitDelList').empty();
-			sl.forEach(function(value, id) {
-				var input = $("<input type=\"hidden\" id=\"del-" + id + "\" name=\"" + id + "\" value=\"" + value + "\" />");
-				$('#suitDelList').append(input);
-			});
-			$( "#suiteDelform" ).submit();
-		};
-			
-		function addCollection() {
-			window.location.replace("/upload");
-		};
-		
-block content
-	button#RunIt(type='button', form='suiteform' , onclick='runSuite()') Run My Suite
-	form#suiteform(action="/run", method='POST')
-		#dataCnt
+block append content
 		#jqxTree
 			ul
 				li(item-expanded='true')

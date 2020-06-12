@@ -1,0 +1,15 @@
+extends suite
+block append head
+	script(type="text/javascript").
+		function runSuite() {
+			$('#dataCnt').empty();
+			sl.forEach(function(value, id) {
+				var input = $("<input type=\"hidden\" id=\"" + id + "\" name=\"" + id + "\" value=\"" + value + "\" />");
+				$('#dataCnt').append(input);
+			});
+			$( "form" ).submit();
+		}		
+block append content
+	button#RunIt(type='button', form='suiteform' , onclick='runSuite()') Run My Suite
+	form#suiteform(action="/run", method='POST')
+		#dataCnt
