@@ -1,5 +1,6 @@
 const express = require('express')
 const pug = require('pug');
+const formidable = require('formidable');
 const bodyParser = require("body-parser");
 const rf = require('./readFiles');
 const ts = require('./testResults');
@@ -48,6 +49,29 @@ app.get("/result", function(req,res) {
 	res.render('result');
 });
 
+app.get("/upload", function(req,res) {
+	console.log("get upload");
+	res.render('upload');
+});
+
+app.post("/upload", function(req,res) {
+	console.log(req);
+	if (req.url == '/upload') {
+		var form = new formidable.IncomingForm();
+	    form.parse(req, function (err, fields, files) {
+	    	var oldpath = files.filetoupload.path;
+	    	var newpath = __dirname + '/suites/' + files.filetoupload.name;
+	    	console.log(newpath);
+	        fs.rename(oldpath, newpath, function (err) {
+	            if (err) throw err;
+	            	res.render('index', { 'data': rf.getfiles()});
+	          });
+	    });
+	} else {
+		res.render('upload');
+	}
+});
+
 app.get("/getstat", function(req,res) {
 	var tot = 0;
 	var ran = Math.floor(Math.random() * Math.floor(100));
@@ -65,16 +89,14 @@ app.post("/run", function(req,res) {
 	fs.writeFile(statFile, data.length , function (err) {
 		  if (err) throw err;
 	});
-	
-
 	data.forEach(function display(value) { 
 		var suite = { collection: path.join(__dirname, 'suites/' + value  ), reporters: 'html',  reporter : { html : { export : './newman/htmlResults.html'}}};
 		var cmd = function (done) {
 			newman.run(suite, ts.processCollection).
 			on('start', function (err, args) {
 				fs.appendFile(statFile, "\n"+value , function (err) {
-					  if (err) throw err;
-					});
+				  if (err) throw err;
+				});
 			})
 		};
 		suiteLst.push(cmd);
@@ -82,6 +104,16 @@ app.post("/run", function(req,res) {
 	ts.setCollectionCount(suiteLst.length);
 	runner.runSuite(suiteLst)
 	res.render('status', {'tot': suiteLst.length});
+});
+
+app.post("/delete", function(req,res) {
+	var data = Object.values(req.body);
+	data.forEach(function display(value) {
+		if (fs.existsSync(__dirname, 'suites/' + value)) {
+			fs.unlinkSync(__dirname + '/suites/' + value);
+		}
+	} );
+	res.render('index', { 'data': rf.getfiles()});
 });
 
 app.listen(port, () => console.log(`Suite runner started. listening on port ${port}!`))

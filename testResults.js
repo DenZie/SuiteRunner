@@ -64,6 +64,9 @@ exports.processCollection = function resultOfNewmanRun(err, summary) {
         } else {
         	collectionResults.result = 'passed'
         }
+    	  if(collectionResults.suiteName == undefined) {
+              collectionResults.result = 'failed'    		  
+    	  }
 	  processSuite(null, collectionResults)
   
       }
@@ -74,9 +77,9 @@ var processSuite = function resultOfrunPostmanCollection(errMsg, collectionResul
         return callback(errMsg)
       } else {
     	  collectionCompleteCounter++;
-		if (collectionResults.result === 'failed') {
-		  collectionFailCounter++
-		}
+//		if (collectionResults.result === 'failed') {
+//		  collectionFailCounter++
+//		}
 
         //Tally data from collectionResults for testResultSummary
         tallyTestsTotal += collectionResults.testsTotal

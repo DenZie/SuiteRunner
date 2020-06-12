@@ -11,35 +11,57 @@ block script
 		let sl= new Map();
 		$(document).ready(function () {
 		// create jqxTree
-		$('#jqxTree').jqxTree({  hasThreeStates: true, checkboxes: true});
-		$('#jqxTree').css('visibility', 'visible');
-		$('#jqxTree').on('checkChange', function (event) {
-		    var args = event.args;
-		    var element = args.element;
-		    var checked = args.checked;
-			if (element.parentElement.getAttribute("class") != 'jqx-tree-dropdown-root') {	
-				if(args.checked == true) {
-					sl.set(element.id, element.innerText);
-				} else {
-					sl.delete(element.id);
+			$('#jqxTree').jqxTree({  hasThreeStates: true, checkboxes: true});
+			$('#jqxTree').css('visibility', 'visible');
+			$('#jqxTree').on('checkChange', function (event) {
+			    var args = event.args;
+			    var element = args.element;
+			    var checked = args.checked;
+				if (element.parentElement.getAttribute("class") != 'jqx-tree-dropdown-root') {	
+					if(args.checked == true) {
+						sl.set(element.id, element.innerText);
+					} else {
+						sl.delete(element.id);
+					}
 				}
-			}
-		}); 
+			}); 
 		});
 		function runSuite() {
 			$('#dataCnt').empty();
 			sl.forEach(function(value, id) {
 				var input = $("<input type=\"hidden\" id=\"" + id + "\" name=\"" + id + "\" value=\"" + value + "\" />");
 				$('#dataCnt').append(input);
-			})
+			});
 			$( "form" ).submit();
 		}
 		
+<<<<<<< HEAD
 block content
 	button#RunIt(type='button', form='suiteform' , onclick='runSuite()') Run Suite
+=======
+		function delSuite() {
+			$('#suitDelList').empty();
+			sl.forEach(function(value, id) {
+				var input = $("<input type=\"hidden\" id=\"del-" + id + "\" name=\"" + id + "\" value=\"" + value + "\" />");
+				$('#suitDelList').append(input);
+			});
+			$( "#suiteDelform" ).submit();
+		};
+			
+		function addCollection() {
+			window.location.replace("/upload");
+		};
+body
+	button#addsuite(type='button', onclick='addCollection()') Add Collection	
+	button#DeleteIt(type='button', form='suiteDelform' , onclick='delSuite()') Delete Suite
+	button#RunIt(type='button', onclick='runSuite()') Run Suite
+	form#suiteDelform(action="/delete", method='POST')
+		#suitDelList
+>>>>>>> 2c3ce281691cbf84a3e244ed2be054d5705f48ad
 	form#suiteform(action="/run", method='POST')
-		div#dataCnt
-		div#jqxTree
+
+		#dataCnt
+		#jqxTree
 			ul
 				li(item-expanded='true')
 					a(href="#")= 'All Suites'
