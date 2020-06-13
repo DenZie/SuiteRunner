@@ -1,15 +1,11 @@
-/**
- * http://usejsdoc.org/
- */
 var fs = require('fs');
-var path = ".\\";
 var  dt= [];
-
+var suiteTypes = {"postman" : "json", "selenium":"java"}
 exports.getfiles = function () {
 	dt=[''];
-	var n='';
-	fs.readdirSync(__dirname + "//suites").forEach(file => {	
-		if(file.endsWith("json")) {
+	fs.readdirSync(__dirname + "//suites").forEach(file => {
+		var ss = require('./settings.json');
+		if(file.endsWith(suiteTypes[ss.suite])) {
 			dt.push(file);
 		}
 	});

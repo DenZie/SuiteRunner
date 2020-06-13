@@ -13,14 +13,15 @@ block append head
 			width : 100px;
 		}
 block content
-	table
-		th Property
-		th Value
-		each val, key in data
-				tr
-					td #{key}
-					td
-						input(type="text", name=key, value=val)
-	button#RunIt(type='button', form='suiteform' , onclick='delSuite()') Save Settings
+	form#suiteform(action="/settings", method='POST')
+		table
+			th Property
+			th Value
+			each val, key in data
+					tr
+						td #{key}
+						td
+							input(type="text", name=key, value=val)
+		button#RunIt(type='submit', form='suiteform' ) Save Settings
 						
 						

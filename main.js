@@ -26,11 +26,17 @@ app.use(bodyParser.json());
 const port = 3000
 app.set('view engine', 'pug');
 
-app.get('/', function (req, res) {
-		var data = {"data" : settings.getSettings()};
-		console.log(data)
-	 res.render('settings', data);
+app.get('/settings', function (req, res) {
+	var data = {"data" : settings.getSettings()};
+	res.render('settings', data);
 });
+
+app.post('/settings', function (req, res) {
+	settings.save(req.body);
+	var data = {"data" : req.body};
+ res.render('settings', data);
+});
+
 
 app.get('/runSuite', function (req, res) {
 	 res.render('runSuite', { 'data': rf.getfiles()});
