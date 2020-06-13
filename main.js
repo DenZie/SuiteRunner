@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const rf = require('./readFiles');
 const ts = require('./testResults');
 const runner = require('./testRunner');
+const settings = require('./settings');
 const app = express()
 const fs = require('fs');
 const readline = require('readline');
@@ -26,7 +27,9 @@ const port = 3000
 app.set('view engine', 'pug');
 
 app.get('/', function (req, res) {
-	 res.render('nav');
+		var data = {"data" : settings.getSettings()};
+		console.log(data)
+	 res.render('settings', data);
 });
 
 app.get('/runSuite', function (req, res) {

@@ -1,0 +1,26 @@
+extends nav
+block append head
+	script(type="text/javascript").
+		$(document).ready(function () {
+			var dt = !{data};
+			dt.forEach(function (key,val) {
+				alert(key + "= "+ val);
+			});
+		});
+	style(type='text/css').
+		tr, td {
+			background-color: #ddd;
+			width : 100px;
+		}
+block content
+	table
+		th Property
+		th Value
+		each val, key in data
+				tr
+					td #{key}
+					td
+						input(type="text", name=key, value=val)
+	button#RunIt(type='button', form='suiteform' , onclick='delSuite()') Save Settings
+						
+						
