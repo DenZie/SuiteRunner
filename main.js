@@ -98,18 +98,22 @@ app.post("/run", function(req,res) {
 	fs.writeFile(statFile, data.length , function (err) {
 		  if (err) throw err;
 	});
-	data.forEach(function display(value) { 
-		var suite = { collection: path.join(__dirname, 'suites/' + value  ), reporters: 'html',  reporter : { html : { export : './newman/htmlResults.html'}}};
-		var cmd = function (done) {
-			newman.run(suite, ts.processCollection).
-			on('start', function (err, args) {
-				fs.appendFile(statFile, "\n"+value , function (err) {
-				  if (err) throw err;
-				});
-			})
-		};
-		suiteLst.push(cmd);
-	} );
+	data.forEach(function (value) { 
+		var ss = require('./settings.json');
+		console.log("suiteTypes" + ss.suite)
+		if(ss.suite ==="postman") {
+			var suite = { collection: path.join(__dirname, 'suites/' + value  ), reporters: 'html',  reporter : { html : { export : './newman/htmlResults.html'}}};
+			var cmd = function (done) {
+				newman.run(suite, ts.processCollection).
+				on('start', function (err, args) {
+					fs.appendFile(statFile, "\n"+value , function (err) {
+					  if (err) throw err;
+					});
+				})
+			};
+			suiteLst.push(cmd);
+		}
+	});
 	ts.setCollectionCount(suiteLst.length);
 	runner.runSuite(suiteLst)
 	res.render('status', {'tot': suiteLst.length});

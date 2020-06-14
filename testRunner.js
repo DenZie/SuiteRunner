@@ -1,5 +1,6 @@
 const fs = require('fs');
 const resultFile = 'result.json'
+const ds = require('./defaultSettings.json');
 
 exports.runSuite = async function runPostManSuite(suiteLst) {
 	var i=0;
@@ -8,3 +9,4 @@ exports.runSuite = async function runPostManSuite(suiteLst) {
 		setTimeout(value, i* 2000);
 	});
 }
+
